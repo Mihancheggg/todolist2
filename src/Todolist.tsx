@@ -4,6 +4,7 @@ import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import {Button, Checkbox, IconButton} from '@mui/material';
 import {Delete} from '@mui/icons-material';
+import {CheckBoxComponent} from './Components/CheckBox';
 
 export type TaskType = {
     id: string
@@ -40,6 +41,10 @@ export function Todolist(props: PropsType) {
     const onAllClickHandler = () => props.changeFilter('all', props.id);
     const onActiveClickHandler = () => props.changeFilter('active', props.id);
     const onCompletedClickHandler = () => props.changeFilter('completed', props.id);
+    const changeTaskStatusHandler =(isDone: boolean, id: string)=>{
+        props.changeTaskStatus(id, isDone, props.id)
+    }
+
 
     return <div>
         <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
@@ -53,18 +58,23 @@ export function Todolist(props: PropsType) {
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id);
-                    }
+                    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                    //     let newIsDoneValue = e.currentTarget.checked;
+                    //     props.changeTaskStatus(t.id, newIsDoneValue, props.id);
+                    // }
                     const onTitleChangeHandler = (newValue: string) => {
                         props.changeTaskTitle(t.id, newValue, props.id);
                     }
 
+                    /*const changeTaskStatusHandler =(isDone: boolean)=>{
+                        props.changeTaskStatus(t.id, isDone, props.id)
+                    }*/
+
 
                     return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
+                        <CheckBoxComponent callback={(isDone)=>changeTaskStatusHandler(isDone, t.id)} isDone={t.isDone}/>
                         {/*<input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>*/}
-                        <Checkbox onChange={onChangeHandler} checked={t.isDone} />
+                        {/*<Checkbox onChange={onChangeHandler} checked={t.isDone} />*/}
                         <EditableSpan value={t.title} onChange={onTitleChangeHandler}/>
                         <IconButton onClick={onClickHandler} aria-label="delete">
                             <Delete/>

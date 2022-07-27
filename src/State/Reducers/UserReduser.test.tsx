@@ -1,7 +1,18 @@
 import {userReducer} from './UserReducer';
 
+type StartStateType = {
+    age: number,
+    childrenCount: number,
+    name: string
+}
+
+let startState: StartStateType
+
+beforeEach(() => {
+    startState = { age: 20, childrenCount: 2, name: 'Dimych' };
+})
+
 test('user reducer should increment only age', () => {
-    const startState = { age: 20, childrenCount: 2, name: 'Dimych' };
 
     const endState = userReducer(startState, { type: 'INCREMENT-AGE' })
 
@@ -10,7 +21,6 @@ test('user reducer should increment only age', () => {
 });
 
 test('user reducer should increment only childrenCount', () => {
-    const startState = { age: 20, childrenCount: 2, name: 'Dimych' };
 
     const endState = userReducer(startState, { type: 'INCREMENT-CHILDREN-COUNT' })
 
@@ -20,7 +30,6 @@ test('user reducer should increment only childrenCount', () => {
 });
 
 test('user reducer should change name of user', () => {
-    const startState = { name: 'Dimych', age: 20, childrenCount: 2 };
     const newName = 'Viktor';
     const endState = userReducer(startState, { type: 'CHANGE-NAME', newName: newName })
 

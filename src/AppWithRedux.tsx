@@ -1,23 +1,20 @@
-import React, {useReducer} from 'react';
+import React from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
-import {v1} from 'uuid';
 import {ButtonAppBar} from './Components/ButtonAppBar';
 import {Container, Grid, Paper} from '@mui/material';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
-    removeTodolistAC,
-    todolistsReducer
+    removeTodolistAC
 } from './State/Reducers/TodolistsReducer';
 import {
     addTaskActionCreator,
     changeTaskStatusActionCreator,
     changeTaskTitleActionCreator,
-    removeTaskActionCreator,
-    tasksReducer
+    removeTaskActionCreator
 } from './State/Reducers/TasksReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './State/Store';
@@ -37,8 +34,8 @@ export type TasksStateType = {
 
 export function AppWithRedux() {
 
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+    /*let todolistId1 = v1();
+    let todolistId2 = v1();*/
 
     const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
 
@@ -102,10 +99,9 @@ export function AppWithRedux() {
                             }
 
                             return (
-                                <Grid item>
+                                <Grid item key={tl.id}>
                                     <Paper style={{padding: '10px'}}>
                                         <Todolist
-                                            key={tl.id}
                                             id={tl.id}
                                             title={tl.title}
                                             tasks={tasksForTodolist}

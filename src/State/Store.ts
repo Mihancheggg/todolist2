@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 })
 // непосредственно создаём store
 export const store = createStore(rootReducer);
-export type StoreType = typeof store
+//export type StoreType = typeof store
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
